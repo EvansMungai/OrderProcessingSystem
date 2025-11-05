@@ -18,6 +18,6 @@ public class OrderRepository : IOrderRepository
     }
     public async Task<Order?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.Orders.FindAsync(new object[] {id }, cancellationToken);)
+        return await _context.Orders.FindAsync(new object[] {id }, cancellationToken);
     }
 }
