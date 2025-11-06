@@ -21,11 +21,11 @@ A modular, event-driven order processing microservice built with ASP.NET Core 9,
 
 ## ✨ Features
 
-🔹 **Order Management**: Order Creation, Persistence, Computed Values.
-🔹 **Clean Architecture**: Separation of concerns, Event-driven architecture, Domain-driven design.
-🔹 **Infrastructure & Orchestration**: Docker Compose, Automatic Migrations, Environment Variables.
-🔹 **Observability**: RabbitMQ Management UI, Container-level Database Inspection and Logs.
-🔹 **Resilience**: Retry policies and Circuit breakers. 
+1. **Order Management**: Order Creation, Persistence, Computed Values.
+2. **Clean Architecture**: Separation of concerns, Event-driven architecture, Domain-driven design.
+3. **Infrastructure & Orchestration**: Docker Compose, Automatic Migrations, Environment Variables.
+4. **Observability**: RabbitMQ Management UI, Container-level Database Inspection and Logs.
+5. **Resilience**: Retry policies and Circuit breakers. 
 
 ---
 
@@ -35,16 +35,16 @@ A modular, event-driven order processing microservice built with ASP.NET Core 9,
 
 ### 🧠 Architectural Decisions 
 
-1. ✅ **Domain-Driven Design**
+1. **Domain-Driven Design**
    - Emphasizes encapsulation and immutability using value objects (`ProductId`, `Money`)
    - Constructor-based validation ensures business rules are enforced early
-2. ✅ **Event-Driven Messaging**
+2. **Event-Driven Messaging**
    - RabbitMQ decouples API from processing logic
    - MassTransit simplifies consumer registration and retry policies
-3. ✅ **EF Core Mapping Strategy**
+3. **EF Core Mapping Strategy**
    - Navigation collections use backing fields to preserve domain integrity
    - Value objects are mapped as owned types for clean persistence
-4. ✅ Containerization
+4. **Containerization**
    - Docker Compose orchestrates API, Worker, PostgreSQL, and RabbitMQ
    - Environment variables injected for portability and CI/CD compatibility
      
@@ -57,29 +57,24 @@ A modular, event-driven order processing microservice built with ASP.NET Core 9,
 
 ## 🚀 Tech Stack
 
--🔹 **API Layer**
-  - **Technology:** ASP.NET Core Web API  
-  - **Rationale:** Enables clean separation of concerns, built-in Swagger support, and extensibility for future endpoints.
-
--🔹 **Domain Layer**
-  - **Technology:** DDD-style entities and value objects  
-  - **Rationale:** Enforces business rules, immutability, and encapsulation at the core of the system.
-
--🔹 **Messaging Layer**
-  - **Technology:** MassTransit with RabbitMQ  
-  - **Rationale:** Facilitates decoupled communication via durable events and supports scalable message routing.
-
--🔹 **Persistence Layer**
-  - **Technology:** EF Core with PostgreSQL  
-  - **Rationale:** Provides relational integrity, supports value object mapping, and integrates seamlessly with .NET.
-
--🔹 **Worker Layer**
-  - **Technology:** Background service hosted in a separate container  
-  - **Rationale:** Handles asynchronous event consumption and processing without blocking the API.
-
--🔹 **Orchestration Layer**
-  - **Technology:** Docker Compose  
-  - **Rationale:** Enables reproducible, multi-container deployment with clear service dependencies and isolation.
+1. **API Layer**
+   - **Technology:** ASP.NET Core Web API  
+   - **Rationale:** Enables clean separation of concerns, built-in Swagger support, and extensibility for future endpoints.
+2. **Domain Layer**
+   - **Technology:** DDD-style entities and value objects  
+   - **Rationale:** Enforces business rules, immutability, and encapsulation at the core of the system.
+3. **Messaging Layer**
+   - **Technology:** MassTransit with RabbitMQ  
+   - **Rationale:** Facilitates decoupled communication via durable events and supports scalable message routing.
+4. **Persistence Layer**
+   - **Technology:** EF Core with PostgreSQL  
+   - **Rationale:** Provides relational integrity, supports value object mapping, and integrates seamlessly with .NET.
+5. **Worker Layer**
+   - **Technology:** Background service hosted in a separate container  
+   - **Rationale:** Handles asynchronous event consumption and processing without blocking the API.
+6. **Orchestration Layer**
+   - **Technology:** Docker Compose  
+   - **Rationale:** Enables reproducible, multi-container deployment with clear service dependencies and isolation.
 
 ---
 
@@ -149,11 +144,10 @@ Creates a new order and publishes an `OrderPlacedEvent`.
 **Password:** `mypassword`
 
 ### 🐘 PostgreSQL
-**Host:** `localhost:5432`  
-**Database:** `orders`  
-**User:** `postgres`  
-**Password:** `postgres`
-
+**Connect via psql**
+```bash
+docker exec -it <postgres_container_name> psql -U postgres -d orders
+```
 
 
 
