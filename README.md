@@ -1,36 +1,88 @@
-# 🛒 Order Processing System
+# 🛒 Order Processing Microservice
 
 A modular, event-driven order processing microservice built with ASP.NET Core 9, EF Core, RabbitMQ and PostgreSQL — containerized with Docker Compose for seamless orchestration.
 
 ---
 
-## 🚀 Tech Stack
-
-### 🔹 API Layer
-- **Technology:** ASP.NET Core Web API  
-- **Rationale:** Enables clean separation of concerns, built-in Swagger support, and extensibility for future endpoints.
-
-### 🔹 Domain Layer
-- **Technology:** DDD-style entities and value objects  
-- **Rationale:** Enforces business rules, immutability, and encapsulation at the core of the system.
-
-### 🔹 Messaging Layer
-- **Technology:** MassTransit with RabbitMQ  
-- **Rationale:** Facilitates decoupled communication via durable events and supports scalable message routing.
-
-### 🔹 Persistence Layer
-- **Technology:** EF Core with PostgreSQL  
-- **Rationale:** Provides relational integrity, supports value object mapping, and integrates seamlessly with .NET.
-
-### 🔹 Worker Layer
-- **Technology:** Background service hosted in a separate container  
-- **Rationale:** Handles asynchronous event consumption and processing without blocking the API.
-
-### 🔹 Orchestration Layer
-- **Technology:** Docker Compose  
-- **Rationale:** Enables reproducible, multi-container deployment with clear service dependencies and isolation.
+## Table of Contents
+- [Introduction to the Microservice](#Order-Processing-Microservice)
+- [Table of Contents](#Table-of-Contents)
+- [✨ Features](#Features)
+- [🏛 Architecture](#Architecture)
+  - [🧠 Architectural Decisions](#Architectural-Decisions)
+  - [⚠️ Tradeoffs](#Tradeoffs)
+- [🚀 Tech Stack](#Tech-Stack)
+- [⚙️ Setup Instructions](#Setup-Instructions)
+- [📬 API Usage](#API-Usage)
+- [🧪 End-to-End Flow](#End-to-End-Flow)
+- [📊 Observability (Optional)](#Observability-(Optional))
 
 ---
+
+## ✨ Features
+
+🔹 **Order Management**: Order Creation, Persistence, Computed Values.
+🔹 **Clean Architecture**: Separation of concerns, Event-driven architecture, Domain-driven design.
+🔹 **Infrastructure & Orchestration**: Docker Compose, Automatic Migrations, Environment Variables.
+🔹 **Observability**: RabbitMQ Management UI, Container-level Database Inspection and Logs.
+🔹 **Resilience**: Retry policies and Circuit breakers. 
+
+---
+
+## 🏛 Architecture
+
+<img width="1536" height="1024" alt="ChatGPT Image Nov 6, 2025, 05_04_33 PM" src="https://github.com/user-attachments/assets/d106deff-3f67-4bad-aa2f-4c0a147f9956" />
+
+### 🧠 Architectural Decisions 
+
+1. ✅ **Domain-Driven Design**
+   - Emphasizes encapsulation and immutability using value objects (`ProductId`, `Money`)
+   - Constructor-based validation ensures business rules are enforced early
+2. ✅ **Event-Driven Messaging**
+   - RabbitMQ decouples API from processing logic
+   - MassTransit simplifies consumer registration and retry policies
+3. ✅ **EF Core Mapping Strategy**
+   - Navigation collections use backing fields to preserve domain integrity
+   - Value objects are mapped as owned types for clean persistence
+4. ✅ Containerization
+   - Docker Compose orchestrates API, Worker, PostgreSQL, and RabbitMQ
+   - Environment variables injected for portability and CI/CD compatibility
+     
+### ⚠️ Tradeoffs
+- EF Core constructor binding limitations require parameterless constructors
+- RabbitMQ setup assumes local dev; cloud migration may require TLS and credential hardening
+- Value object mapping adds complexity to migrations and query projections
+
+---
+
+## 🚀 Tech Stack
+
+-🔹 **API Layer**
+  - **Technology:** ASP.NET Core Web API  
+  - **Rationale:** Enables clean separation of concerns, built-in Swagger support, and extensibility for future endpoints.
+
+-🔹 **Domain Layer**
+  - **Technology:** DDD-style entities and value objects  
+  - **Rationale:** Enforces business rules, immutability, and encapsulation at the core of the system.
+
+-🔹 **Messaging Layer**
+  - **Technology:** MassTransit with RabbitMQ  
+  - **Rationale:** Facilitates decoupled communication via durable events and supports scalable message routing.
+
+-🔹 **Persistence Layer**
+  - **Technology:** EF Core with PostgreSQL  
+  - **Rationale:** Provides relational integrity, supports value object mapping, and integrates seamlessly with .NET.
+
+-🔹 **Worker Layer**
+  - **Technology:** Background service hosted in a separate container  
+  - **Rationale:** Handles asynchronous event consumption and processing without blocking the API.
+
+-🔹 **Orchestration Layer**
+  - **Technology:** Docker Compose  
+  - **Rationale:** Enables reproducible, multi-container deployment with clear service dependencies and isolation.
+
+---
+
 ## ⚙️ Setup Instructions
 
 ### 🔧 Prerequisites
@@ -48,31 +100,6 @@ docker-compose up --build
 - 🚀 Build and run the **API** on [http://localhost:5000](http://localhost:5000)  
 - 🧑‍🏭 Start the **Worker**, **PostgreSQL**, and **RabbitMQ** services  
 - 🗃️ Apply **EF Core migrations** automatically on API startup
-
----
-
-## 🧠 Architectural Decisions & Tradeoffs
-
-### ✅ Domain-Driven Design
-- Emphasizes encapsulation and immutability using value objects (`ProductId`, `Money`)
-- Constructor-based validation ensures business rules are enforced early
-
-### ✅ Event-Driven Messaging
-- RabbitMQ decouples API from processing logic
-- MassTransit simplifies consumer registration and retry policies
-
-### ✅ EF Core Mapping Strategy
-- Navigation collections use backing fields to preserve domain integrity
-- Value objects are mapped as owned types for clean persistence
-
-### ✅ Containerization
-- Docker Compose orchestrates API, Worker, PostgreSQL, and RabbitMQ
-- Environment variables injected for portability and CI/CD compatibility
-
-### ⚠️ Tradeoffs
-- EF Core constructor binding limitations require parameterless constructors
-- RabbitMQ setup assumes local dev; cloud migration may require TLS and credential hardening
-- Value object mapping adds complexity to migrations and query projections
 
 ---
 
