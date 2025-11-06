@@ -11,6 +11,8 @@ public class OrderItem
 
     public Money TotalPrice => new(UnitPrice.Amount * Quantity, UnitPrice.Currency);
 
+    private OrderItem() { }
+
     public OrderItem(ProductId productId, int quantity, Money unitPrice)
     {
         Id = Guid.NewGuid();

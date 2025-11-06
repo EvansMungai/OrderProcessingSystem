@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./OrderProcessing.API
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_started
+      rabbitmq :
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__Postgres=Host=postgres;Port=5432;Database=orders;Username=postgres;Password=postgres
+      - QueueSettings__Host=rabbitmq
+      - QueueSettings__Username=myuser
+      - QueueSettings__Password=mypassword
+    restart: on-failure
+
+  worker:
+    build:
+      context: ./OrderProcessing.Worker
+      dockerfile: Dockerfile
+    depends_on:
+      rabbitmq: 
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    environment:
+      - ConnectionStrings__Postgres=Host=postgres;Port=5432;Database=orders;Username=postgres;Password=postgres
+      - QueueSettings__Host=rabbitmq
+      - QueueSettings__Username=myuser
+      - QueueSettings__Password=mypassword
+    restart: on-failure
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: orders
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: myuser
+      RABBITMQ_DEFAULT_PASS: mypassword
+    ports:
+      - "5672:5672"
+      - "15672:15672" # Management UI on localhost:15672
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "status"]
+      interval: 10s
+      timeout: 10s 
+      retries: 3
+    restart: always
+
+volumes:
+  postgres_data:

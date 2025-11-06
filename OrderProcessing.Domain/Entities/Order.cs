@@ -9,7 +9,7 @@ public class Order : IAggregateRoot
     public DateTime CreatedAt { get; private set; }
     public OrderStatus Status { get; private set; }
     public List<OrderItem> Items { get; private set; } = new();
-
+    private Order() { }
     public Order(List<OrderItem> items)
     {
         Id = Guid.NewGuid();

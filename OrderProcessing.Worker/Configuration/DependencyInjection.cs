@@ -8,12 +8,23 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWorkerServices(this IServiceCollection services, IConfiguration config)
     {
-        var queueSettings = config.GetSection("QueueSettings").Get<QueueSettings>();
+        services.Configure<QueueSettings>(config.GetSection("QueueSettings"));
         services.AddMassTransit(x =>
         {
             x.AddConsumer<OrderPlacedConsumer>();
             x.UsingRabbitMq((context, cfg) =>
             {
+                if (config == null)
+                    throw new InvalidOperationException("Configuration object is null in Add Infrastructure services");
+
+                var section = config.GetSection("QueueSettings");
+                if (!section.Exists())
+                    throw new InvalidOperationException("QueueSettings section is missing in configuration");
+
+                var queueSettings = section.Get<QueueSettings>();
+                if (queueSettings == null)
+                    throw new InvalidOperationException("QueueSettings could not be bound to QueueSettings class.");
+
                 cfg.Host(queueSettings.Host, h =>
                 {
                     h.Username(queueSettings.Username);
