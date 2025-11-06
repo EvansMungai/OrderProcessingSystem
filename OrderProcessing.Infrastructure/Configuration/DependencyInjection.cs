@@ -12,6 +12,13 @@ namespace OrderProcessing.Infrastructure.Configuration;
 
 public static class DependencyInjection
 {
+    /// <summary>
+    /// Extension method to register infrastructure services such as database, caching and messaging.
+    /// </summary>
+    /// <param name="services">The service collection to add services to.</param>
+    /// <param name="config">The application configuration object.</param>
+    /// <returns>The updated service collection.</returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
         // PostgreSQL

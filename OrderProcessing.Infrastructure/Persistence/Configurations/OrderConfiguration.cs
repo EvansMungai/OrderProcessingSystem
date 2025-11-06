@@ -4,8 +4,15 @@ using OrderProcessing.Domain.Entities;
 
 namespace OrderProcessing.Infrastructure.Persistence.Configurations;
 
+/// <summary>
+/// Configures the EF Core mapping for the Order entity.
+/// </summary>
 public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
+    /// <summary>
+    /// Applies configuration rule to the Order entity.
+    /// </summary>
+    /// <param name="builder">The builder used to configure the entity.</param>
     public void Configure(EntityTypeBuilder<Order> builder)
     {
         builder.HasKey(o => o.Id);
