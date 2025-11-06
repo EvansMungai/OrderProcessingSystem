@@ -31,6 +31,24 @@ A modular, event-driven order processing microservice built with ASP.NET Core 9,
 - **Rationale:** Enables reproducible, multi-container deployment with clear service dependencies and isolation.
 
 ---
+## ⚙️ Setup Instructions
+
+### 🔧 Prerequisites
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)  
+- [Docker](https://www.docker.com/) + [Docker Compose](https://docs.docker.com/compose/)
+
+---
+
+### 📦 Build & Run
+
+```bash
+docker-compose down -v
+docker-compose up --build
+```
+🧩 This Will
+- 🚀 Build and run the **API** on [http://localhost:5000](http://localhost:5000)  
+- 🧑‍🏭 Start the **Worker**, **PostgreSQL**, and **RabbitMQ** services  
+- 🗃️ Apply **EF Core migrations** automatically on API startup
 
 ## 🧠 Architectural Decisions & Tradeoffs
 
@@ -105,23 +123,6 @@ Creates a new order and publishes an `OrderPlacedEvent`.
 **User:** `postgres`  
 **Password:** `postgres`
 
-## ⚙️ Setup Instructions
 
-### 🔧 Prerequisites
-- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)  
-- [Docker](https://www.docker.com/) + [Docker Compose](https://docs.docker.com/compose/)
-
----
-
-### 📦 Build & Run
-
-```bash
-docker-compose down -v
-docker-compose up --build
-```
-🧩 This Will
-- 🚀 Build and run the **API** on [http://localhost:5000](http://localhost:5000)  
-- 🧑‍🏭 Start the **Worker**, **PostgreSQL**, and **RabbitMQ** services  
-- 🗃️ Apply **EF Core migrations** automatically on API startup
 
 
