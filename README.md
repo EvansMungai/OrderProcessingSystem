@@ -37,18 +37,19 @@ A modular, event-driven order processing microservice built with ASP.NET Core 9,
 - [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)  
 - [Docker](https://www.docker.com/) + [Docker Compose](https://docs.docker.com/compose/)
 
----
-
 ### 📦 Build & Run
 
 ```bash
 docker-compose down -v
 docker-compose up --build
 ```
+
 🧩 This Will
 - 🚀 Build and run the **API** on [http://localhost:5000](http://localhost:5000)  
 - 🧑‍🏭 Start the **Worker**, **PostgreSQL**, and **RabbitMQ** services  
 - 🗃️ Apply **EF Core migrations** automatically on API startup
+
+---
 
 ## 🧠 Architectural Decisions & Tradeoffs
 
@@ -103,12 +104,15 @@ Creates a new order and publishes an `OrderPlacedEvent`.
   "orderId": "a1b2c3d4-e5f6-7890-abcd-1234567890ef"
 }
 ```
+---
 
 ## 🧪 End-to-End Flow
 1. API receives order and persists it to PostgreSQL
 2. Publishes OrderPlacedEvent to RabbitMQ
 3. Worker consumes the event and logs processing
 4. Order and items are stored in the database
+
+---
 
 ## 📊 Observability (Optional)
 
