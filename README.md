@@ -1,6 +1,6 @@
 # 🛒 Order Processing Microservice
 
-A modular, event-driven order processing microservice built with ASP.NET Core 9, EF Core, RabbitMQ and PostgreSQL — containerized with Docker Compose for seamless orchestration.
+A modular, event-driven order processing microservice built with ASP.NET Core 10, EF Core, RabbitMQ and PostgreSQL — containerized with Docker for seamless orchestration.
 
 ---
 
@@ -23,7 +23,7 @@ A modular, event-driven order processing microservice built with ASP.NET Core 9,
 
 1. **Order Management**: Order Creation, Persistence, Computed Values.
 2. **Clean Architecture**: Separation of concerns, Event-driven architecture, Domain-driven design.
-3. **Infrastructure & Orchestration**: Docker Compose, Automatic Migrations, Environment Variables.
+3. **Infrastructure & Orchestration**: Docker, Automatic Migrations, Environment Variables.
 4. **Observability**: RabbitMQ Management UI, Container-level Database Inspection and Logs.
 5. **Resilience**: Retry policies and Circuit breakers. 
 
@@ -81,7 +81,7 @@ A modular, event-driven order processing microservice built with ASP.NET Core 9,
 ## ⚙️ Setup Instructions
 
 ### 🔧 Prerequisites
-- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)  
+- [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)  
 - [Docker](https://www.docker.com/) + [Docker Compose](https://docs.docker.com/compose/)
 
 ### 📦 Build & Run
